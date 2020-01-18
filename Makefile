@@ -1,22 +1,20 @@
-FINAL_FILE = "versit.sh"
-PRJ_SRC = "${PWD}/src/main.sh"
-PRJ_LIB = $(shell ls -d ${PWD}/lib/*)
-SHELL := /bin/env bash
+FINAL_FILE := "versit.sh"
+PRJ_SRC := "${PWD}/src/main.sh"
+PRJ_LIB := $(shell ls -d ${PWD}/lib/*)
 
-all: define_main add_dependencies invoke_main
+all: initiate add_dependencies define_main invoke_main
 
-define_main:
-	echo -e "#!/usr/bin/env bash\n" > ${FINAL_FILE}
-	echo -e "function main() {\n" >> ${FINAL_FILE}
-	cat "${PRJ_SRC}" | sed -e 's/^/  /g' >> ${FINAL_FILE}
-	echo -e "\n}\n" >> ${FINAL_FILE}
-
-invoke_main:
-	echo "main \$$@" >> ${FINAL_FILE}
+initiate:
+	echo "#!/bin/bash" > ${FINAL_FILE};
 
 add_dependencies:
-	for filename in $${PRJ_LIB[*]}; 
-	do 
-		cat $${filename} >> ${FINAL_FILE}; 
-		echo >> ${FINAL_FILE}; 
-	done
+	$(foreach file, ${PRJ_LIB},$(cat ${file} >> ${FINAL_FILE}))
+
+define_main:
+	echo "function main() {" >> ${FINAL_FILE}
+	cat ${PRJ_SRC} >> ${FINAL_FILE}
+	echo "}" >> ${FINAL_FILE}
+
+invoke_main:
+	echo >> ${FINAL_FILE}
+	echo "main \$$@" >> ${FINAL_FILE}
