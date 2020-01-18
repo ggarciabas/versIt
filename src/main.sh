@@ -3,11 +3,11 @@
 
 VERSION=0.1
 
-usage() {
+usage () {
 	echo "usage: versit [-v | --version] [-h | --help] <command> [<args>]"
 }
 
-help() {
+help () {
 	echo "versIt, version ${VERSION}"
 	usage
 	echo ""
@@ -15,10 +15,11 @@ help() {
 	echo "	Initiate a version structure"
 	echo "		start		Create an empty folder to store versions"
 	echo "	Manage versions of code structure"
+	echo "		status		Show files that have differences"
 	echo "		commit		Identify new modifications and store version of it!"
 }
 
-version(){
+version () {
 	echo "versIt version ${VERSION}"
 }
 

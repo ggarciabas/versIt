@@ -1,0 +1,14 @@
+*
+
+!lib
+!src
+
+!lib/*.sh
+!src/*.sh
+
+!LICENSE
+!README.md
+!Makefile
+!.gitignore
+
+!.versit.sh
