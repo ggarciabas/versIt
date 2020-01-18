@@ -1,6 +1,3 @@
-#!/bin/bash
-# m217754
-
 VERSION=0.1
 
 usage () {
@@ -47,40 +44,14 @@ case $1 in
 		usage
 		;;
 	"start")
-		source ./start.sh
+		source lib/start.sh
 		start $*
+		;;
+	"status")
+		source lib/status.sh
+		status $*
 		;;
 	*) 
 		help
 		;;
 esac
-
-# if [ "$1" == "--help" ] | [ "$1" == "-h" ];
-# then
-	
-# fi
-
-# if [ "$1" == "--help" ] | [ "$1" == "-h" ];
-
-# while getopts ":s:c:" opt;
-# do
-# 	echo "Opt: ${opt}"
-# 	case $opt in
-# 		s) 	FOLDER="$OPTARG"
-# 			echo "Start: ${FOLDER}"
-# 		;;
-# 		c)  FOLDER="$OPTARG"
-# 			echo "Commmit: ${FOLDER}"
-# 		;;
-# 		\?) echo "Invalid option: TODO[show options!]"
-# 		;;
-# 	esac
-# done
-
-
-#FOLDER=$1
-
-#for file in $(ls $FOLDER);
-#do
-#	echo $file
-#done
