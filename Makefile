@@ -1,4 +1,4 @@
-https://www.netbsd.org/docs/pkgsrc/makefile.html
+# https://www.netbsd.org/docs/pkgsrc/makefile.html
 
 FINAL_FILE := "versit.sh"
 PRJ_SRC := "${PWD}/src/main.sh"
@@ -10,7 +10,11 @@ initiate:
 	echo "#!/bin/bash" > ${FINAL_FILE};
 
 add_dependencies:
-	$(foreach file, ${PRJ_LIB},$(cat ${file} >> ${FINAL_FILE}))
+	for filename in ${PRJ_LIB} ""; \
+	do \
+		cat ${filename} >> ${FINAL_FILE} \
+		echo >> ${FINAL_FILE} \
+	done
 
 define_main:
 	echo "function main() {" >> ${FINAL_FILE}
