@@ -1,3 +1,5 @@
+https://www.netbsd.org/docs/pkgsrc/makefile.html
+
 FINAL_FILE := "versit.sh"
 PRJ_SRC := "${PWD}/src/main.sh"
 PRJ_LIB := $(shell ls -d ${PWD}/lib/*)
