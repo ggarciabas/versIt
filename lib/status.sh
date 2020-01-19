@@ -1,5 +1,9 @@
 #!/bin/bash
 
+RED_C=`tput setaf 1`
+GREEN_C=`tput setaf 2`
+RESET_C=`tput sgr0`
+
 status_usage () {
     echo "usage: versit status <path>"
 }
@@ -30,10 +34,10 @@ status_search () {
                 cmp -s $VRST_PATH/${SUB_PATH} ${FILE}
                 if [ $? -eq 1 ];
                 then
-                    echo " (modified)   ${SUB_PATH}"
+                    echo "${RED_C} (modified)   ${SUB_PATH}${RESET_C}"
                 fi
             else
-                echo " (new)    ${SUB_PATH}" # no exist, then, it is different
+                echo  "${GREEN_C} (new)    ${SUB_PATH}${RESET_C}" # no exist, then, it is different
             fi
         fi
     done
