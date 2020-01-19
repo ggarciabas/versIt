@@ -10,42 +10,31 @@ status_help () {
     echo "  <path>      Folder to list changed files [if not informed the './' is considered]"
 }
 
-status_compare () {
-    VRST_PATH=$1
-    PATH=$2
-    if [ -d $VRST_PATH/$PATH ];
-    then
-        # check diff
-        diff $VRST_PATH/$PATH # necessario obter main, reavaliar estrutura! 
-    fi
-    echo ${PATH} # no exist, then, it is different
-}
-
 status_search () {
-    echo "DIR: ${1}"
     for PATHNAME in $(ls ${1});
     do
         if [ -d ${PATHNAME} ];
         then
-            echo "  Folder: ${PATHNAME}"
             status_search ${1}/${PATHNAME}
         else
-            FILE=${PATHNAME}
-            echo "  File: ${FILE}"
-
-
-            IFS='/' read -a SEP_PATH <<< ${1} # split by '/'
+            FILE=${1}/${PATHNAME}
+            
+            IFS='/' read -a SEP_PATH <<< ${FILE} # split by '/'
             SEP_PATH=(${SEP_PATH[@]}) # transform to array
             VRST_PATH=${SEP_PATH[0]}/.versit
 
-            for FOLDER in ${SEP_PATH[@]:1}; # do not consider the first element of an array
-            do
-                status_compare ${VRST_PATH} ${FOLDER}/${FILE}
-            done
+            SUB_PATH=$(echo $FILE | sed 's+\.\/++g')
 
-            # SIZE=${#SEP_PATH[@]}
-            # # usar valor de array apos 1a posicao ${arr[@]:1}
-            # echo "      ${MAIN_P}"
+            if [ -f $VRST_PATH/${SUB_PATH} ];
+            then
+                cmp -s $VRST_PATH/${SUB_PATH} ${FILE}
+                if [ $? -eq 1 ];
+                then
+                    echo " (modified)   ${SUB_PATH}"
+                fi
+            else
+                echo " (new)    ${SUB_PATH}" # no exist, then, it is different
+            fi
         fi
     done
 }
@@ -55,7 +44,7 @@ status_validate () {
     # validate if .versit exist
     if [ ! -d ${DIR}/.versit ];
     then
-        echo "Necessary to start the project folder versioning!"
+        echo "Necessary to start the project folder to versioning!"
         exit 1
     fi
 }
