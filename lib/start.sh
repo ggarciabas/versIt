@@ -1,16 +1,16 @@
 #!/bin/bash
 
-usage () {
+start_usage () {
     echo "usage: versit start <path>"
 }
 
-help () {
-    usage
+start_help () {
+    start_usage
     echo ""
     echo "  <path>      Folder to activate the versioning structure (the path may exist) [if not informed the './' is considered]"
 }
 
-create () {
+start_create () {
     DIR=$1
     if [ -d "${DIR}/.versit" ];
     then
@@ -32,26 +32,26 @@ create () {
 function start {
     if [ $# -eq 1 ];
     then
-        create './'
+        start_create './'
     else
         case $2 in
             "help") 
-                help
+                start_help
                 ;;
             "--help") 
-                help
+                start_help
                 ;;
             "-h") 
-                help	
+                start_help	
                 ;;
             *)
                 DIR=$2
                 if [ -d "${DIR}" ];
                 then
-                    create ${DIR}
+                    start_create ${DIR}
                 else
                     echo "Invalid path"
-                    help
+                    start_help
                 fi
                 ;;
         esac
