@@ -1,9 +1,5 @@
 #!/bin/bash
 
-RED_C=`tput setaf 1`
-GREEN_C=`tput setaf 2`
-RESET_C=`tput sgr0`
-
 status_usage () {
     echo "usage: versit status <path>"
 }
@@ -34,10 +30,10 @@ status_search () {
                 cmp -s $VRST_PATH/${SUB_PATH} ${FILE}
                 if [ $? -eq 1 ];
                 then
-                    echo "${RED_C} (modified)   ${SUB_PATH}${RESET_C}"
+                    echo "${VERSIT_RED_C} (modified)   ${SUB_PATH}${VERSIT_RESET_C}"
                 fi
             else
-                echo  "${GREEN_C} (new)    ${SUB_PATH}${RESET_C}" # no exist, then, it is different
+                echo  "${VERSIT_GREEN_C} (new)    ${SUB_PATH}${VERSIT_RESET_C}" # no exist, then, it is different
             fi
         fi
     done
@@ -48,7 +44,7 @@ status_validate () {
     # validate if .versit exist
     if [ ! -d ${DIR}/.versit ];
     then
-        echo "Necessary to start the project folder to versioning!"
+        echo "${VERSIT_RED_C}It is necessary to initialize the project folder to versioning. Use ${VERSIT_GREEN_C}init${VERSIT_RED_C} function first.${VERSIT_RESET_C}"
         exit 1
     fi
 }

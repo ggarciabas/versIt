@@ -1,16 +1,16 @@
 #!/bin/bash
 
-start_usage () {
-    echo "usage: versit start <path>"
+init_usage () {
+    echo "usage: versit init <path>"
 }
 
-start_help () {
-    start_usage
+init_help () {
+    init_usage
     echo ""
     echo "  <path>      Folder to activate the versioning structure (the path may exist) [if not informed the './' is considered]"
 }
 
-start_create () {
+init_create () {
     DIR=$1
     if [ -d "${DIR}/.versit" ];
     then
@@ -29,29 +29,29 @@ start_create () {
     mkdir "${DIR}/.versit"
 }
 
-function start {
+function init {
     if [ $# -eq 1 ];
     then
-        start_create './'
+        init_create './'
     else
         case $2 in
             "help") 
-                start_help
+                init_help
                 ;;
             "--help") 
-                start_help
+                init_help
                 ;;
             "-h") 
-                start_help	
+                init_help	
                 ;;
             *)
                 DIR=$2
                 if [ -d "${DIR}" ];
                 then
-                    start_create ${DIR}
+                    init_create ${DIR}
                 else
                     echo "Invalid path"
-                    start_help
+                    init_help
                 fi
                 ;;
         esac
